@@ -1,0 +1,123 @@
+
+/* App.css */
+
+/* Contenedor principal que abarca TODA la pantalla */
+.app-container {
+  min-height: 100vh; /* Ocupa el 100% de la altura de la ventana */
+  width: 100%;
+  background-color: #242424; /* Tu fondo oscuro */
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #2b2b2b; /* Un poco más claro que el fondo */
+}
+
+.logo {
+  font-size: 1.8rem;
+  color: white;
+}
+
+.logo-highlight {
+  color: #2ecc71; /* Verde tipo AromaGourmet */
+}
+
+/* Layout Principal: Esto divide la pantalla */
+.main-content {
+  display: flex;
+  flex: 1; /* Esto hace que el contenido empuje hacia abajo si es necesario */
+  padding: 2rem;
+  gap: 2rem; /* Espacio entre productos y carrito */
+  width: 100%;
+  max-width: 1200px; /* Opcional: para que no se estire infinito en pantallas gigantes */
+  margin: 0 auto; /* Centra el contenido horizontalmente */
+}
+
+/* Sección de Productos (Izquierda) */
+.products-grid {
+  flex: 2; /* Ocupa 2 partes del espacio (más ancho) */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Tarjetas de Producto */
+.card {
+  background-color: #333;
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid #444;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #f1c40f; /* Amarillo/Dorado */
+}
+
+.btn-add {
+  background-color: #2ecc71;
+  color: #1a1a1a;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Sección del Carrito (Derecha) */
+.cart-section {
+  flex: 1; /* Ocupa 1 parte del espacio (más angosto) */
+}
+
+.cart-box {
+  background-color: #333;
+  padding: 1.5rem;
+  border-radius: 12px;
+  position: sticky; /* Hace que el carrito te siga al bajar */
+  top: 20px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1.5rem 0;
+  color: #2ecc71;
+}
+
+.btn-pay {
+  width: 100%;
+  background-color: #f1c40f; /* Amarillo */
+  color: #1a1a1a;
+  border: none;
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Para celulares: Pone todo en una sola columna */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+}
