@@ -138,7 +138,7 @@ const App = () => {
 
       {/* Enlace corregido para evitar "Número inválido" */}
       <a 
-        href="https://wa.me/+549 381 685120" 
+        href="https://wa.me/+549381685120" 
         className="whatsapp-float" 
         target="_blank" 
         rel="noopener noreferrer"
