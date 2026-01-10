@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { db } from './firebaseConfig'; 
-import { collection, getDocs } from 'firebase/firestore'; 
+import { db } from './firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 import './App.css';
 
 const App = () => {
@@ -12,14 +12,14 @@ const App = () => {
     const obtenerProductos = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "productos"));
-        const listaEspecias = querySnapshot.docs.map(doc => ({
+        const listaEspecies = querySnapshot.docs.map(doc => ({
           id: doc.id,
-          // Cambiamos 'name' por 'title' para que coincida con tu Firebase
-          name: doc.data().title, 
+          name: doc.data().title,
           price: doc.data().price,
-          description: doc.data().descripción // con acento como en tu foto
+          description: doc.data().descripción,
+          image: doc.data().image 
         }));
-        setProducts(listaEspecias);
+        setProducts(listaEspecies);
         setLoading(false);
       } catch (error) {
         console.error("Error al cargar:", error);
@@ -30,105 +30,121 @@ const App = () => {
   }, []);
 
   const addToCart = (product) => {
-    const itemExiste = cart.find(item => item.id === product.id);
-    if (itemExiste) {
-      updateQuantity(product.id, 1);
-    } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
-    }
-  };
-
-  const updateQuantity = (id, cambio) => {
-    setCart(cart.map(item => {
-      if (item.id === id) {
-        const nuevaCantidad = item.quantity + cambio;
-        return { ...item, quantity: nuevaCantidad < 1 ? 1 : nuevaCantidad };
+    setCart(currItems => {
+      const isItemInCart = currItems.find((item) => item.id === product.id);
+      if (isItemInCart) {
+        return currItems.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
       }
-      return item;
-    }));
+      return [...currItems, { ...product, quantity: 1 }];
+    });
   };
 
   const removeFromCart = (id) => {
-    setCart(cart.filter(item => item.id !== id));
+    setCart(currItems => {
+      const item = currItems.find((i) => i.id === id);
+      if (item?.quantity === 1) {
+        return currItems.filter((i) => i.id !== id);
+      } else {
+        return currItems.map((i) =>
+          i.id === id ? { ...i, quantity: i.quantity - 1 } : i
+        );
+      }
+    });
+  };
+
+  const deleteFromCart = (id) => {
+    setCart(currItems => currItems.filter(item => item.id !== id));
   };
 
   const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
-  const handlePayment = () => {
-    if (cart.length === 0) return alert("El carrito está vacío.");
-    alert(`Compra exitosa. Total: $${total}`);
-    setCart([]); 
+  // Función corregida con formato internacional 549...
+  const enviarWhatsApp = () => {
+    const telefono = "549381685120"; 
+    const mensajeItems = cart.map(i => `- ${i.name} x${i.quantity}: $${i.price * i.quantity}`).join('%0A');
+    const mensajeFinal = `Hola AromaGourmet! Quiero realizar un pedido:%0A%0A${mensajeItems}%0A%0A*Total a pagar: $${total}*`;
+    
+    const url = `https://wa.me/${telefono}?text=${mensajeFinal}`;
+    window.open(url, '_blank');
   };
+
+  if (loading) return <div className="loading">Cargando AromaGourmet...</div>;
 
   return (
     <div className="app-container">
-      <nav className="navbar">
-        <div className="logo">Aroma<span className="logo-highlight">Gourmet</span></div>
-      </nav>
+      <header className="header">
+        <h1>Aroma<span className="highlight">Gourmet</span></h1>
+      </header>
 
-      <main className="main-content">
-        <section className="products-grid">
-          <h2>Nuestros Condimentos</h2>
-          {loading ? (
-            <p>Cargando condimentos...</p>
-          ) : (
-            products.map(product => (
-              <div key={product.id} className="card">
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                <div className="card-footer">
-                  <span className="price">${product.price}</span>
-                  <button className="btn-add" onClick={() => addToCart(product)}>
-                    Agregar +
-                  </button>
+      <main className="main-layout">
+        <section className="products-section">
+          <h2 className="section-title">Nuestros Condimentos</h2>
+          <div className="products-grid">
+            {products.map((prod) => (
+              <div key={prod.id} className="card">
+                {prod.image && <img src={prod.image} alt={prod.name} className="card-img" />}
+                <div className="card-body">
+                  <h3>{prod.name}</h3>
+                  <p className="card-desc">{prod.description}</p>
+                  <div className="card-footer">
+                    <span className="price">${prod.price}</span>
+                    <button onClick={() => addToCart(prod)} className="btn-add">Agregar +</button>
+                  </div>
                 </div>
               </div>
-            ))
-          )}
+            ))}
+          </div>
         </section>
 
-        <aside className="cart-section">
-          <div className="cart-box">
-            <h3>Mi Carrito</h3>
-            <hr />
-            {cart.length === 0 ? (
-              <p style={{ textAlign: 'center', opacity: 0.6 }}>No hay productos seleccionados</p>
-            ) : (
-              <ul className="cart-list">
-                {cart.map(item => (
-                  <li key={item.id} className="cart-item">
-                    <div className="item-info">
-                      <strong>{item.name}</strong>
-                      <span>${item.price * item.quantity}</span>
+        <aside className="cart-sidebar">
+          <div className="cart-sticky">
+            <h2>🛒 Mi Carrito</h2>
+            <div className="cart-items">
+              {cart.length === 0 ? (
+                <p className="empty-msg">No hay productos seleccionados</p>
+              ) : (
+                cart.map((item) => (
+                  <div key={item.id} className="cart-item">
+                    <div className="cart-item-info">
+                      <span className="cart-item-name">{item.name}</span>
+                      <span className="cart-item-subtotal">${item.price * item.quantity}</span>
                     </div>
-                    <div className="item-controls">
-                      <div className="qty-buttons">
-                        <button className="btn-qty" onClick={() => updateQuantity(item.id, -1)}>-</button>
-                        <span>{item.quantity}</span>
-                        <button className="btn-qty" onClick={() => updateQuantity(item.id, 1)}>+</button>
-                      </div>
-                      <button className="btn-remove" onClick={() => removeFromCart(item.id)}>Eliminar</button>
+                    <div className="cart-item-controls">
+                      <button onClick={() => removeFromCart(item.id)}>-</button>
+                      <span className="qty">{item.quantity}</span>
+                      <button onClick={() => addToCart(item)}>+</button>
+                      <button onClick={() => deleteFromCart(item.id)} className="btn-del">×</button>
                     </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <div className="total-row">
-              <span>Total:</span>
-              <span>${total}</span>
+                  </div>
+                ))
+              )}
             </div>
-            <button className="btn-pay" onClick={handlePayment}>Finalizar Pago</button>
+            {cart.length > 0 && (
+              <div className="cart-total">
+                <div className="total-line">
+                  <span>Total:</span>
+                  <span className="total-amount">${total}</span>
+                </div>
+                <button onClick={enviarWhatsApp} className="btn-finalizar">
+                   Finalizar Pedido por WhatsApp
+                </button>
+              </div>
+            )}
           </div>
         </aside>
       </main>
 
-      <footer className="footer">
-        <p>Gracias por visitarnos</p>
-        <div className="social-links">
-          <span>Facebook</span> | <span>Instagram</span> | <span>WhatsApp</span>
-        </div>
-        <p className="footer-slogan">Puedes seguirnos en nuestras redes</p>
-      </footer>
+      {/* Enlace corregido para evitar "Número inválido" */}
+      <a 
+        href="https://wa.me/+549 381 685120" 
+        className="whatsapp-float" 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+      </a>
     </div>
   );
 };
