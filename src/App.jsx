@@ -238,7 +238,7 @@ const App = () => {
                 <h4>Contacto</h4>
                 <div className="contact-info-footer">
                   <p>📍 San Miguel de Tucumán</p>
-                  <p>📞 +54 9 381 685120</p>
+                  <p>📞 381 685120</p>
                 </div>
             </div>
             <div className="footer-col">
