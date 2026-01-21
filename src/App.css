@@ -1,3 +1,107 @@
+/* --- VARIABLES Y BASE --- */
+:root {
+  --bg-color: #0f0f0f;
+  --card-bg: #1a1a1a;
+  --accent-color: #2ecc71;
+  --accent-hover: #27ae60;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --border-color: #2a2a2a;
+}
+
+body, html { 
+  margin: 0; 
+  background-color: var(--bg-color); 
+  color: var(--text-primary); 
+  font-family: 'Inter', sans-serif; 
+}
+
+/* --- HEADER Y NAV --- */
+.header { 
+  padding: 2.5rem 5%; 
+  border-bottom: 1px solid var(--border-color); 
+  background: rgba(15, 15, 15, 0.95); 
+  backdrop-filter: blur(10px); 
+  position: sticky; 
+  top: 0; 
+  z-index: 1000; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 1.5rem; 
+}
+
+.main-title { 
+  font-size: 2.8rem; 
+  font-weight: 800; 
+  cursor: pointer; 
+}
+
+.highlight { 
+  color: var(--accent-color); 
+}
+
+.nav-bar { 
+  display: flex; 
+  gap: 12px; 
+  justify-content: center; 
+  flex-wrap: wrap; 
+  align-items: center; 
+}
+
+/* DISEÑO UNIFICADO DE BOTONES (Tienda, Nosotros, Contacto) */
+.nav-btn-special {
+  text-decoration: none;
+  position: relative;
+  background: rgba(46, 204, 113, 0.05);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  color: white;
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.nav-btn-special .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent-color);
+  opacity: 0; 
+  transition: all 0.3s ease;
+}
+
+.nav-btn-special:hover, 
+.nav-btn-special.active {
+  background: var(--accent-color);
+  color: black;
+  transform: translateY(-2px);
+  border-color: var(--accent-color);
+}
+
+.nav-btn-special:hover .dot, 
+.nav-btn-special.active .dot {
+  opacity: 1; 
+  background: black;
+  box-shadow: none;
+}
+
+/* --- BUSCADOR --- */
+.search-input { 
+  padding: 12px 20px; 
+  border-radius: 50px; 
+  border: 1px solid var(--border-color); 
+  background: #1a1a1a; 
+  color: white; 
+  outline: none; 
+}
+
 /* --- Lógica del Desplegable --- */
 .card-title-row {
   display: flex;
@@ -21,77 +125,12 @@
 }
 
 .description-panel.show {
-  max-height: 200px; /* Ajusta segun necesidad */
+  max-height: 200px;
   opacity: 1;
   padding: 10px 0;
   border-top: 1px solid var(--border-color);
   margin-bottom: 10px;
 }
-
-.clickable-area {
-  cursor: pointer;
-  overflow: hidden;
-}
-
-/* --- VARIABLES Y BASE --- */
-:root {
-  --bg-color: #0f0f0f;
-  --card-bg: #1a1a1a;
-  --accent-color: #2ecc71;
-  --accent-hover: #27ae60;
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
-  --border-color: #2a2a2a;
-}
-
-body, html { margin: 0; background-color: var(--bg-color); color: var(--text-primary); font-family: 'Inter', sans-serif; }
-
-/* --- HEADER Y NAV --- */
-.header { padding: 2.5rem 5%; border-bottom: 1px solid var(--border-color); background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
-.main-title { font-size: 2.8rem; font-weight: 800; cursor: pointer; }
-.highlight { color: var(--accent-color); }
-.nav-bar { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; align-items: center; }
-
-.nav-btn { background: transparent; border: 1px solid var(--border-color); color: white; padding: 10px 24px; border-radius: 30px; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
-.nav-btn.active, .nav-btn:hover { background: var(--accent-color); color: black; border-color: var(--accent-color); }
-
-/* MEJORA AESTETIK BOTÓN NOSOTROS */
-.nav-btn-special {
-  position: relative;
-  background: rgba(46, 204, 113, 0.05);
-  border: 1px solid rgba(46, 204, 113, 0.3);
-  color: white;
-  padding: 10px 24px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.4s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.nav-btn-special .dot {
-  width: 6px;
-  height: 6px;
-  background: var(--accent-color);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--accent-color);
-}
-
-.nav-btn-special:hover, .nav-btn-special.active {
-  background: var(--accent-color);
-  color: black;
-  transform: translateY(-2px);
-}
-
-.nav-btn-special:hover .dot, .nav-btn-special.active .dot {
-  background: black;
-  box-shadow: none;
-}
-
-/* --- BUSCADOR --- */
-.search-input { padding: 12px 20px; border-radius: 50px; border: 1px solid var(--border-color); background: #1a1a1a; color: white; outline: none; }
 
 /* --- LAYOUT PRINCIPAL --- */
 .main-layout { display: grid; grid-template-columns: 1fr 360px; gap: 40px; padding: 40px 5%; }
@@ -112,47 +151,146 @@ body, html { margin: 0; background-color: var(--bg-color); color: var(--text-pri
 .modern-ctrl-btn:hover { background: var(--accent-color); color: black; }
 .btn-whatsapp-send { width: 100%; background: var(--accent-color); padding: 16px; border-radius: 12px; font-weight: 800; border: none; cursor: pointer; margin-top: 20px; }
 
-/* --- SECCIÓN NOSOTROS MEJORADA --- */
+/* --- SECCIÓN NOSOTROS --- */
 .about-premium { max-width: 1000px; margin: auto; text-align: center; padding: 20px; }
 .about-main-title { font-size: 3rem; font-weight: 800; margin: 20px 0; color: #fff; }
 .about-badge { color: var(--accent-color); font-weight: bold; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
 .about-lead { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 50px; }
-
 .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
-.about-card { 
-  background: rgba(255, 255, 255, 0.03); 
-  border: 1px solid var(--border-color); 
-  padding: 35px; 
-  border-radius: 24px; 
-  text-align: left;
-  transition: 0.4s ease;
-}
-.about-card:hover { 
-  border-color: var(--accent-color); 
-  transform: translateY(-10px); 
-  background: rgba(46, 204, 113, 0.05); 
-}
-.about-card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-.about-card-number { 
-  background: var(--accent-color); 
-  color: #000; 
-  font-weight: 900; 
-  width: 35px; height: 35px; 
-  display: flex; align-items: center; justify-content: center; 
-  border-radius: 8px; 
-}
-.about-card h4 { font-size: 1.4rem; margin: 0; color: #fff; }
-.about-card p { color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem; }
+.about-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 35px; border-radius: 24px; text-align: left; transition: 0.4s ease; }
+.about-card:hover { border-color: var(--accent-color); transform: translateY(-10px); background: rgba(46, 204, 113, 0.05); }
+.about-card-number { background: var(--accent-color); color: #000; font-weight: 900; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
 
-/* --- WHATSAPP Y FOOTER --- */
+/* --- WHATSAPP Y FOOTER (BOTONES MEJORADOS) --- */
 .whatsapp-float-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1001; }
 .whatsapp-icon-img { width: 32px; height: 32px; }
 
 .modern-footer { background: #080808; padding: 80px 5% 40px; border-top: 1px solid var(--border-color); margin-top: 80px; }
 .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 50px; max-width: 1200px; margin: 0 auto; }
-.social-pills { display: flex; flex-direction: column; gap: 12px; }
-.social-pill { display: flex; align-items: center; gap: 12px; background: rgba(255, 255, 255, 0.05); padding: 10px 20px; border-radius: 12px; text-decoration: none; color: white; border: 1px solid var(--border-color); transition: all 0.3s ease; width: fit-content; }
-.social-pill img { width: 20px; height: 20px; }
-.social-pill:hover { transform: translateX(10px); background: rgba(255, 255, 255, 0.1); }
-.social-pill.whatsapp:hover { border-color: #25d366; color: #25d366; }
-.social-pill.instagram:hover { border-color: #e1306c; color: #e1306c; }
+
+.social-pills { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px; 
+}
+
+.social-pill { 
+  display: flex; 
+  align-items: center; 
+  gap: 15px; 
+  background: rgba(255, 255, 255, 0.03); 
+  padding: 12px 24px; 
+  border-radius: 16px; 
+  text-decoration: none; 
+  color: var(--text-primary); 
+  border: 1px solid var(--border-color); 
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+  min-width: 200px;
+  backdrop-filter: blur(5px);
+}
+
+.social-pill:hover { 
+  transform: translateX(12px) scale(1.02); 
+  background: rgba(255, 255, 255, 0.08); 
+  border-color: var(--accent-color);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.social-pill img {
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+  transition: transform 0.3s ease;
+}
+
+.social-pill:hover img {
+  transform: rotate(10deg);
+}
+
+.social-pill span {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+/* --- NUEVOS ESTILOS PARA REDES SOCIALES (Añadir al final) --- */
+
+.social-links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaciado uniforme */
+  margin-top: 20px;
+}
+
+/* Botón moderno estilo "Card" */
+.social-card {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.05); /* Efecto cristal sutil */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  width: 240px; /* Ancho idéntico para ambos */
+}
+
+/* Animación al pasar el mouse */
+.social-card:hover {
+  transform: scale(1.05) translateX(10px); /* Crece y se desplaza */
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Colores de marca en el borde al hacer hover */
+.social-card.wa:hover { border-color: #25D366; }
+.social-card.ig:hover { border-color: #E1306C; }
+
+/* Contenedor del Icono */
+.social-icon-wrapper {
+  width: 35px;
+  height: 35px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon-wrapper img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Textos internos */
+.social-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.social-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #888;
+  font-weight: 700;
+  margin-bottom: -2px;
+}
+
+.social-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Ajuste para que en móviles se vean centrados */
+@media (max-width: 768px) {
+  .social-links-container {
+    align-items: center;
+  }
+  .social-card {
+    width: 100%;
+    max-width: 280px;
+  }
+}

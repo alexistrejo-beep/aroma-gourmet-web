@@ -91,18 +91,28 @@ const App = () => {
         </div>
 
         <nav className="nav-bar">
-          <button onClick={() => setView("home")} className={`nav-btn ${view === "home" ? "active" : ""}`}>Tienda</button>
+          <button 
+            onClick={() => setView("home")} 
+            className={`nav-btn-special ${view === "home" ? "active" : ""}`}
+          >
+            <span>Tienda</span>
+            <div className="dot"></div>
+          </button>
           
-          <button onClick={() => setView("about")} className={`nav-btn-special ${view === "about" ? "active" : ""}`}>
+          <button 
+            onClick={() => setView("about")} 
+            className={`nav-btn-special ${view === "about" ? "active" : ""}`}
+          >
             <span>Nosotros</span>
             <div className="dot"></div>
           </button>
 
           <button 
             onClick={() => document.querySelector('.modern-footer').scrollIntoView({ behavior: 'smooth' })} 
-            className="nav-btn"
+            className="nav-btn-special"
           >
-            Contacto
+            <span>Contacto</span>
+            <div className="dot"></div>
           </button>
           
           <div className="search-wrapper">
@@ -233,20 +243,33 @@ const App = () => {
             </div>
             <div className="footer-col">
                 <h4>Nuestras Redes</h4>
-                <div className="social-pills">
-                    <a href="https://wa.me/549381685120" target="_blank" rel="noreferrer" className="social-pill whatsapp">
+                <div className="social-links-container">
+                  <a href="https://wa.me/549381685120" target="_blank" rel="noreferrer" className="social-card wa">
+                    <div className="social-icon-wrapper">
                       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" />
-                      <span>WhatsApp</span>
-                    </a>
-                    <a href="#" className="social-pill instagram">
+                    </div>
+                    <div className="social-info">
+                      <span className="social-label">Chat Directo</span>
+                      <span className="social-name">WhatsApp</span>
+                    </div>
+                  </a>
+                  <a href="https://instagram.com/aroma_gourmet_tuc" target="_blank" rel="noreferrer" className="social-card ig">
+                    <div className="social-icon-wrapper">
                       <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="IG" />
-                      <span>Instagram</span>
-                    </a>
+                    </div>
+                    <div className="social-info">
+                      <span className="social-label">Seguinos</span>
+                      <span className="social-name">Instagram</span>
+                    </div>
+                  </a>
                 </div>
             </div>
         </div>
         <div className="footer-bottom">
           <p>© 2026 AromaGourmet. Hecho con ❤️ en Tucumán.</p>
+          <p>Alexis Trejo
+
+          </p>
         </div>
       </footer>
 
