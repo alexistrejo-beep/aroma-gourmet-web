@@ -150,7 +150,7 @@ const App = () => {
 
                       <div className="card-footer">
                         <span className="price">${prod.price}</span>
-                        <button onClick={() => addToCart(prod)} className="btn-add">Agregar +</button>
+                        <button onClick={() => addToCart(prod)} className="btn-add">Añadir +</button>
                       </div>
                     </div>
                   </div>
@@ -160,21 +160,25 @@ const App = () => {
 
             <aside className="cart-sidebar">
               <div className="cart-sticky">
-                <h2 className="cart-title">🛒 Carrito</h2>
+                <h2 className="cart-title">🛒 Mi Pedido</h2>
                 <div className="cart-items">
-                  {cart.length === 0 ? <p className="empty-msg">Tu carrito está esperando algo especial.</p> : cart.map((item) => (
-                    <div key={item.id} className="cart-item">
-                      <div className="cart-item-info">
-                        <span className="item-name">{item.name}</span>
-                        <span className="cart-item-subtotal">${item.price * item.quantity}</span>
+                  {cart.length === 0 ? (
+                    <p className="empty-msg">Tu carrito está esperando algo especial.</p>
+                  ) : (
+                    cart.map((item) => (
+                      <div key={item.id} className="cart-item">
+                        <div className="cart-item-info">
+                          <span className="item-name">{item.name}</span>
+                          <span className="cart-item-subtotal">${item.price * item.quantity}</span>
+                        </div>
+                        <div className="cart-controls-modern">
+                          <button className="modern-ctrl-btn" onClick={() => removeFromCart(item.id)}>−</button>
+                          <span className="modern-qty">{item.quantity}</span>
+                          <button className="modern-ctrl-btn" onClick={() => addToCart(item)}>+</button>
+                        </div>
                       </div>
-                      <div className="cart-controls-modern">
-                        <button className="modern-ctrl-btn" onClick={() => removeFromCart(item.id)}>−</button>
-                        <span className="modern-qty">{item.quantity}</span>
-                        <button className="modern-ctrl-btn" onClick={() => addToCart(item)}>+</button>
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
                 {cart.length > 0 && (
                   <div className="cart-total-container">
@@ -267,9 +271,7 @@ const App = () => {
         </div>
         <div className="footer-bottom">
           <p>© 2026 AromaGourmet. Hecho con ❤️ en Tucumán.</p>
-          <p>Alexis Trejo
-
-          </p>
+          <p>Alexis Trejo</p>
         </div>
       </footer>
 
